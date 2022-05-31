@@ -22,3 +22,12 @@ Para conocer qué símbolos se exportaron a nuestro kernel podemos leer el archi
 ## User Space vs Kernel Space
 La CPU puede correr en distintos modos. Cada modo nos brinda diferentes niveles de libertad para hacer lo que queramos con el sistema. Unix utiliza 2 anillos para manejar estos "modos". El anillo mas alto (anillo 0, conocido como "supervisor mode" donde podemos hacer cualquier cosa) y el anillo mas bajo, denominado "usermode".
 Cuando usamos una función como `printf()`, típicamente la usamos en modo usuario. La función realiza una o más llamadas a sistema (system calls) y cada una de estas llamadas a sistema se ejecutan en nombre de la función de la librería, pero para hacerlo deben estar en modo supervisor ya que son parte del kernel mismo. Una vez que la llamada a sistema completa su tarea, retorna y la ejecución se transfiere a user mode nuevamente.
+
+## Device Drivers
+Un tipo de módulo son los device drivers, que proveen funcionalidades para hardware como un puerto serial. En UNIX, cada porción de hardware está representada por un archivo ubicado en `/dev` llamado `device file`, que provee una manera de comunicarnos con el hardware. El driver realiza la comunicación en nombre del usuario. 
+
+Por ejemplo, `es1370.o` puede ser el driver de una tarjeta de sonido, que conecta el archivo en `/dev/sound` a la tarjeta de sonido Ensoniq IS1379. Un programa en espacio de usuario como mp3blaster puede usar `/dev/sound` sin saber qué tarjeta de sonido está installada.
+
+### Minor and Major numbers
+El major number nos dice qué driver está usado para acceder al hardware. A cada driver se le asigna un único major number. Todos los device files con el mismo major number están controlados por el mismo driver. El minor number es utilizado por el driver para distinguir entre los distintos dispositivos que controla.
+
