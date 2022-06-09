@@ -1,0 +1,5 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/sofia/Documents/SisComp/Kernel_Modules/prueba'
+make -C /lib/modules/5.13.0-44-generic/build M=/home/sofia/Documents/SisComp/Kernel_Modules/prueba modules
+make: Leaving directory '/home/sofia/Documents/SisComp/Kernel_Modules/prueba'
+ 
